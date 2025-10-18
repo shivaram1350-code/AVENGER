@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Stress Predictor Chatbot</title>
+    <link rel="stylesheet" href="chatbot-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="chatbot-container">
+        <!-- Header -->
+        <header class="chatbot-header">
+            <div class="header-content">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="bot-info">
+                    <h1>StressBot AI</h1>
+                    <p>Your AI-powered stress level predictor</p>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" onclick="clearChat()" title="Clear Chat">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="action-btn" onclick="toggleSettings()" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="action-btn" onclick="goBack()" title="Back to App">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Chat Area -->
+        <main class="chat-area">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Welcome Message -->
+                <div class="message bot-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            <p>Hello! I'm StressBot AI, your personal stress level predictor. I can analyze your messages and predict your current stress level based on your words, emotions, and patterns.</p>
+                            <p>Tell me how you're feeling today, what's on your mind, or describe your current situation. I'll analyze your message and give you an estimated stress level along with personalized insights!</p>
+                        </div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+
+                <!-- Quick Start Options -->
+                <div class="quick-options">
+                    <button class="quick-option" onclick="sendQuickMessage('I feel overwhelmed with work today')">
+                        <i class="fas fa-briefcase"></i>
+                        Work Stress
+                    </button>
+                    <button class="quick-option" onclick="sendQuickMessage('I had a fight with my partner')">
+                        <i class="fas fa-heart"></i>
+                        Relationship
+                    </button>
+                    <button class="quick-option" onclick="sendQuickMessage('I have too many deadlines')">
+                        <i class="fas fa-clock"></i>
+                        Deadlines
+                    </button>
+                    <button class="quick-option" onclick="sendQuickMessage('I feel anxious about the future')">
+                        <i class="fas fa-brain"></i>
+                        Anxiety
+                    </button>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="typing-text">StressBot is analyzing your message...</span>
+            </div>
+        </main>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <div class="input-container">
+                <button class="input-btn" onclick="toggleVoiceInput()" title="Voice Input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <textarea 
+                    id="messageInput" 
+                    placeholder="Type your message here... (e.g., 'I feel stressed about my presentation tomorrow')"
+                    rows="1"
+                    onkeypress="handleKeyPress(event)"
+                    oninput="autoResize(this)"
+                ></textarea>
+                <button class="input-btn send-btn" onclick="sendMessage()" title="Send Message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="input-suggestions" id="inputSuggestions">
+                <span class="suggestion-label">Try saying:</span>
+                <button class="suggestion" onclick="fillInput('I feel overwhelmed')">I feel overwhelmed</button>
+                <button class="suggestion" onclick="fillInput('Work is really stressful')">Work is really stressful</button>
+                <button class="suggestion" onclick="fillInput('I can\'t sleep well')">I can't sleep well</button>
+            </div>
+        </div>
+
+        <!-- Stress Level Display -->
+        <div class="stress-display" id="stressDisplay" style="display: none;">
+            <div class="stress-meter">
+                <div class="stress-circle">
+                    <div class="stress-fill" id="stressFill"></div>
+                    <div class="stress-text">
+                        <span class="stress-value" id="stressValue">0</span>
+                        <small>Stress Level</small>
+                    </div>
+                </div>
+            </div>
+            <div class="stress-details">
+                <h3 id="stressLevelText">Low Stress</h3>
+                <p id="stressDescription">You seem to be doing well!</p>
+            </div>
+        </div>
+
+        <!-- Analysis Panel -->
+        <div class="analysis-panel" id="analysisPanel" style="display: none;">
+            <h3>Analysis Breakdown</h3>
+            <div class="analysis-items">
+                <div class="analysis-item">
+                    <span class="analysis-label">Sentiment:</span>
+                    <span class="analysis-value" id="sentimentValue">Positive</span>
+                </div>
+                <div class="analysis-item">
+                    <span class="analysis-label">Emotion:</span>
+                    <span class="analysis-value" id="emotionValue">Calm</span>
+                </div>
+                <div class="analysis-item">
+                    <span class="analysis-label">Confidence:</span>
+                    <span class="analysis-value" id="confidenceValue">85%</span>
+                </div>
+                <div class="analysis-item">
+                    <span class="analysis-label">Keywords:</span>
+                    <span class="analysis-value" id="keywordsValue">work, deadline</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Panel -->
+        <div class="recommendations-panel" id="recommendationsPanel" style="display: none;">
+            <h3>Personalized Recommendations</h3>
+            <div class="recommendations-list" id="recommendationsList">
+                <!-- Recommendations will be populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Chatbot Settings</h3>
+                <button class="close-btn" onclick="closeSettings()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="enableVoice" checked>
+                        Enable Voice Input
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="enableNotifications" checked>
+                        Enable Notifications
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="saveConversations" checked>
+                        Save Conversations
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label>Analysis Sensitivity:</label>
+                    <input type="range" id="sensitivity" min="1" max="10" value="5">
+                    <span id="sensitivityValue">5</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voice Input Modal -->
+    <div id="voiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Voice Input</h3>
+                <button class="close-btn" onclick="closeVoiceModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="voice-container">
+                    <div class="voice-circle" id="voiceCircle">
+                        <i class="fas fa-microphone" id="voiceIcon"></i>
+                    </div>
+                    <p id="voiceStatus">Click to start recording</p>
+                    <button class="voice-btn" id="voiceBtn" onclick="toggleRecording()">Start Recording</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="chatbot-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Level Assessment & Games</title>
+    <link rel="stylesheet" href="stress-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>StressCheck</h1>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#quiz" class="nav-link">Quiz</a>
+                <a href="#games" class="nav-link">Games</a>
+                <a href="#results" class="nav-link">Results</a>
+            </nav>
+        </header>
+
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h2>Discover Your Stress Level</h2>
+                    <p>Take our comprehensive stress assessment through interactive quizzes and engaging games to understand your current stress levels and get personalized recommendations.</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span>10,000+</span>
+                            <small>Users Assessed</small>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-gamepad"></i>
+                            <span>5</span>
+                            <small>Interactive Games</small>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-chart-line"></i>
+                            <span>95%</span>
+                            <small>Accuracy Rate</small>
+                        </div>
+                    </div>
+                    <button class="cta-button" onclick="showSection('quiz')">
+                        <i class="fas fa-play"></i>
+                        Start Assessment
+                    </button>
+                </div>
+                <div class="hero-visual">
+                    <div class="stress-meter">
+                        <div class="meter-circle">
+                            <div class="meter-fill" id="homeMeter"></div>
+                            <div class="meter-text">
+                                <span class="meter-value">0</span>
+                                <small>Stress Level</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h2>Stress Level Assessment Quiz</h2>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quizProgress"></div>
+                    </div>
+                    <p class="progress-text">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">20</span></p>
+                </div>
+
+                <div class="quiz-content">
+                    <div class="question-card" id="questionCard">
+                        <h3 id="questionText">Loading question...</h3>
+                        <div class="options" id="optionsContainer">
+                            <!-- Options will be dynamically generated -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-navigation">
+                    <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()" disabled>
+                        Next
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games" class="section">
+            <div class="games-container">
+                <h2>Interactive Stress Games</h2>
+                <p class="games-subtitle">Play these games to further assess your stress levels and practice relaxation techniques.</p>
+                
+                <div class="games-grid">
+                    <!-- Breathing Exercise Game -->
+                    <div class="game-card" onclick="startBreathingGame()">
+                        <div class="game-icon">
+                            <i class="fas fa-lungs"></i>
+                        </div>
+                        <h3>Breathing Exercise</h3>
+                        <p>Follow the breathing pattern to reduce stress and improve focus.</p>
+                        <div class="game-difficulty">Easy</div>
+                    </div>
+
+                    <!-- Color Matching Game -->
+                    <div class="game-card" onclick="startColorGame()">
+                        <div class="game-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Color Matching</h3>
+                        <p>Match colors quickly to test your concentration under pressure.</p>
+                        <div class="game-difficulty">Medium</div>
+                    </div>
+
+                    <!-- Memory Game -->
+                    <div class="game-card" onclick="startMemoryGame()">
+                        <div class="game-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Memory Challenge</h3>
+                        <p>Test your memory and focus with this engaging card game.</p>
+                        <div class="game-difficulty">Hard</div>
+                    </div>
+
+                    <!-- Reaction Time Game -->
+                    <div class="game-card" onclick="startReactionGame()">
+                        <div class="game-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Reaction Time</h3>
+                        <p>Measure your reaction time and stress response.</p>
+                        <div class="game-difficulty">Medium</div>
+                    </div>
+
+                    <!-- Meditation Timer -->
+                    <div class="game-card" onclick="startMeditationTimer()">
+                        <div class="game-icon">
+                            <i class="fas fa-om"></i>
+                        </div>
+                        <h3>Meditation Timer</h3>
+                        <p>Practice mindfulness with guided meditation sessions.</p>
+                        <div class="game-difficulty">Easy</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section">
+            <div class="results-container">
+                <h2>Your Stress Assessment Results</h2>
+                
+                <div class="results-content" id="resultsContent">
+                    <div class="no-results">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h3>Complete the Assessment</h3>
+                        <p>Please complete the quiz and games to see your personalized stress level results and recommendations.</p>
+                        <button class="cta-button" onclick="showSection('quiz')">
+                            <i class="fas fa-play"></i>
+                            Start Assessment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Game Modals -->
+    <!-- Breathing Exercise Modal -->
+    <div id="breathingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Breathing Exercise</h3>
+                <button class="close-btn" onclick="closeModal('breathingModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="breathing-circle" id="breathingCircle">
+                    <div class="breathing-text">
+                        <span id="breathingInstruction">Get Ready</span>
+                        <div class="breathing-timer" id="breathingTimer">0</div>
+                    </div>
+                </div>
+                <div class="breathing-controls">
+                    <button class="game-btn" id="breathingStartBtn" onclick="startBreathing()">Start</button>
+                    <button class="game-btn secondary" onclick="resetBreathing()">Reset</button>
+                </div>
+                <div class="breathing-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Cycles:</span>
+                        <span class="stat-value" id="breathingCycles">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Duration:</span>
+                        <span class="stat-value" id="breathingDuration">0s</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Color Matching Modal -->
+    <div id="colorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Color Matching Game</h3>
+                <button class="close-btn" onclick="closeModal('colorModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="color-game-area">
+                    <div class="color-instructions">
+                        <h4>Match the color name with the text color!</h4>
+                        <div class="color-score">
+                            <span>Score: <span id="colorScore">0</span></span>
+                            <span>Time: <span id="colorTime">30</span>s</span>
+                        </div>
+                    </div>
+                    <div class="color-display" id="colorDisplay">
+                        <div class="color-text" id="colorText">Ready?</div>
+                    </div>
+                    <div class="color-options" id="colorOptions">
+                        <!-- Options will be generated dynamically -->
+                    </div>
+                </div>
+                <div class="color-controls">
+                    <button class="game-btn" id="colorStartBtn" onclick="startColorGame()">Start Game</button>
+                    <button class="game-btn secondary" onclick="resetColorGame()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memory Game Modal -->
+    <div id="memoryModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Memory Challenge</h3>
+                <button class="close-btn" onclick="closeModal('memoryModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="memory-game-area">
+                    <div class="memory-info">
+                        <div class="memory-score">
+                            <span>Moves: <span id="memoryMoves">0</span></span>
+                            <span>Matches: <span id="memoryMatches">0</span>/8</span>
+                            <span>Time: <span id="memoryTime">0</span>s</span>
+                        </div>
+                    </div>
+                    <div class="memory-grid" id="memoryGrid">
+                        <!-- Cards will be generated dynamically -->
+                    </div>
+                </div>
+                <div class="memory-controls">
+                    <button class="game-btn" id="memoryStartBtn" onclick="startMemoryGame()">Start Game</button>
+                    <button class="game-btn secondary" onclick="resetMemoryGame()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reaction Time Modal -->
+    <div id="reactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reaction Time Test</h3>
+                <button class="close-btn" onclick="closeModal('reactionModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="reaction-game-area">
+                    <div class="reaction-instructions">
+                        <h4>Click when the circle turns green!</h4>
+                        <div class="reaction-stats">
+                            <span>Attempts: <span id="reactionAttempts">0</span></span>
+                            <span>Average: <span id="reactionAverage">0</span>ms</span>
+                        </div>
+                    </div>
+                    <div class="reaction-circle" id="reactionCircle" onclick="reactToClick()">
+                        <span id="reactionText">Wait...</span>
+                    </div>
+                </div>
+                <div class="reaction-controls">
+                    <button class="game-btn" id="reactionStartBtn" onclick="startReactionTest()">Start Test</button>
+                    <button class="game-btn secondary" onclick="resetReactionTest()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meditation Timer Modal -->
+    <div id="meditationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Meditation Timer</h3>
+                <button class="close-btn" onclick="closeModal('meditationModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="meditation-area">
+                    <div class="meditation-timer-display">
+                        <div class="timer-circle" id="meditationTimer">
+                            <span id="meditationTime">05:00</span>
+                        </div>
+                    </div>
+                    <div class="meditation-controls">
+                        <div class="time-selector">
+                            <label>Duration:</label>
+                            <select id="meditationDuration">
+                                <option value="300">5 minutes</option>
+                                <option value="600">10 minutes</option>
+                                <option value="900">15 minutes</option>
+                                <option value="1800">30 minutes</option>
+                            </select>
+                        </div>
+                        <div class="meditation-buttons">
+                            <button class="game-btn" id="meditationStartBtn" onclick="startMeditation()">Start Meditation</button>
+                            <button class="game-btn secondary" onclick="pauseMeditation()">Pause</button>
+                            <button class="game-btn secondary" onclick="resetMeditation()">Reset</button>
+                        </div>
+                    </div>
+                    <div class="meditation-guidance">
+                        <p id="meditationGuidance">Find a comfortable position and close your eyes. Focus on your breathing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="stress-script.js"></script>
+</body>
+</html>

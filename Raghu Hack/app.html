@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StressCheck Pro - Complete Stress Management App</title>
+    <link rel="stylesheet" href="app-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Complete stress assessment and management application with games, tracking, and analytics">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Loading Screen -->
+        <div id="loadingScreen" class="loading-screen">
+            <div class="loading-content">
+                <div class="loading-logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>StressCheck Pro</h1>
+                </div>
+                <div class="loading-spinner"></div>
+                <p>Loading your stress management tools...</p>
+            </div>
+        </div>
+
+        <!-- Login/Register Modal -->
+        <div id="authModal" class="modal">
+            <div class="modal-content auth-modal">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                        <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+                    </div>
+                    
+                    <div id="loginForm" class="auth-form active">
+                        <h2>Welcome Back</h2>
+                        <form onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="loginEmail" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="loginPassword" placeholder="Password" required>
+                            </div>
+                            <button type="submit" class="auth-btn">Login</button>
+                        </form>
+                        <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuthTab('register')">Register here</a></p>
+                    </div>
+                    
+                    <div id="registerForm" class="auth-form">
+                        <h2>Create Account</h2>
+                        <form onsubmit="handleRegister(event)">
+                            <div class="form-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="registerName" placeholder="Full Name" required>
+                            </div>
+                            <div class="form-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="registerEmail" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="registerPassword" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <i class="fas fa-calendar"></i>
+                                <input type="date" id="registerBirthdate" required>
+                            </div>
+                            <button type="submit" class="auth-btn">Register</button>
+                        </form>
+                        <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuthTab('login')">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Interface -->
+        <div id="mainApp" class="main-app" style="display: none;">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <div class="logo">
+                        <i class="fas fa-brain"></i>
+                        <h1>StressCheck Pro</h1>
+                    </div>
+                </div>
+                <div class="header-center">
+                    <nav class="main-nav">
+                        <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="#assessment" class="nav-item" onclick="showSection('assessment')">
+                            <i class="fas fa-clipboard-check"></i>
+                            <span>Assessment</span>
+                        </a>
+                        <a href="#games" class="nav-item" onclick="showSection('games')">
+                            <i class="fas fa-gamepad"></i>
+                            <span>Games</span>
+                        </a>
+                        <a href="#tracking" class="nav-item" onclick="showSection('tracking')">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Tracking</span>
+                        </a>
+                        <a href="#reports" class="nav-item" onclick="showSection('reports')">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                        <a href="#chatbot" class="nav-item" onclick="showSection('chatbot')">
+                            <i class="fas fa-robot"></i>
+                            <span>AI Chatbot</span>
+                        </a>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="user-menu">
+                        <div class="user-avatar" onclick="toggleUserMenu()">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info">
+                                <h4 id="userName">John Doe</h4>
+                                <p id="userEmail">john@example.com</p>
+                            </div>
+                            <div class="user-actions">
+                                <a href="#" onclick="showSection('profile')"><i class="fas fa-user-cog"></i> Profile</a>
+                                <a href="#" onclick="showSection('settings')"><i class="fas fa-cog"></i> Settings</a>
+                                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="app-main">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="app-section active">
+                    <div class="dashboard-container">
+                        <div class="dashboard-header">
+                            <h2>Welcome back, <span id="dashboardUserName">John</span>!</h2>
+                            <p>Here's your stress management overview</p>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <!-- Quick Stats -->
+                            <div class="dashboard-card stats-card">
+                                <h3>Today's Stress Level</h3>
+                                <div class="stress-meter-large">
+                                    <div class="meter-circle">
+                                        <div class="meter-fill" id="dashboardStressMeter"></div>
+                                        <div class="meter-text">
+                                            <span class="meter-value" id="dashboardStressValue">0</span>
+                                            <small>Stress Level</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="stress-trend">
+                                    <span class="trend-indicator" id="stressTrend">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+5% from yesterday</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="dashboard-card actions-card">
+                                <h3>Quick Actions</h3>
+                                <div class="quick-actions">
+                                    <button class="quick-action" onclick="startQuickAssessment()">
+                                        <i class="fas fa-play"></i>
+                                        <span>Quick Assessment</span>
+                                    </button>
+                                    <button class="quick-action" onclick="startBreathingExercise()">
+                                        <i class="fas fa-lungs"></i>
+                                        <span>Breathing Exercise</span>
+                                    </button>
+                                    <button class="quick-action" onclick="startMeditation()">
+                                        <i class="fas fa-om"></i>
+                                        <span>5-Min Meditation</span>
+                                    </button>
+                                    <button class="quick-action" onclick="logMood()">
+                                        <i class="fas fa-smile"></i>
+                                        <span>Log Mood</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Recent Activity -->
+                            <div class="dashboard-card activity-card">
+                                <h3>Recent Activity</h3>
+                                <div class="activity-list" id="recentActivity">
+                                    <div class="activity-item">
+                                        <i class="fas fa-clipboard-check"></i>
+                                        <div class="activity-content">
+                                            <span class="activity-title">Completed Stress Assessment</span>
+                                            <span class="activity-time">2 hours ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <i class="fas fa-lungs"></i>
+                                        <div class="activity-content">
+                                            <span class="activity-title">Breathing Exercise</span>
+                                            <span class="activity-time">Yesterday</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Weekly Chart -->
+                            <div class="dashboard-card chart-card">
+                                <h3>Weekly Stress Trend</h3>
+                                <div class="chart-container">
+                                    <canvas id="weeklyChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Goals Progress -->
+                            <div class="dashboard-card goals-card">
+                                <h3>This Week's Goals</h3>
+                                <div class="goals-list">
+                                    <div class="goal-item">
+                                        <div class="goal-info">
+                                            <span class="goal-title">Daily Meditation</span>
+                                            <span class="goal-progress">5/7 days</span>
+                                        </div>
+                                        <div class="goal-bar">
+                                            <div class="goal-fill" style="width: 71%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="goal-item">
+                                        <div class="goal-info">
+                                            <span class="goal-title">Exercise</span>
+                                            <span class="goal-progress">3/5 days</span>
+                                        </div>
+                                        <div class="goal-bar">
+                                            <div class="goal-fill" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tips & Insights -->
+                            <div class="dashboard-card tips-card">
+                                <h3>Today's Tip</h3>
+                                <div class="tip-content">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <p id="dailyTip">Take a 5-minute break every hour to stretch and breathe deeply. This can significantly reduce stress levels throughout the day.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Assessment Section -->
+                <section id="assessment" class="app-section">
+                    <div class="assessment-container">
+                        <div class="assessment-header">
+                            <h2>Stress Assessment</h2>
+                            <p>Complete our comprehensive assessment to understand your current stress levels</p>
+                        </div>
+
+                        <div class="assessment-tabs">
+                            <button class="tab-btn active" onclick="switchAssessmentTab('quiz')">Quiz</button>
+                            <button class="tab-btn" onclick="switchAssessmentTab('games')">Interactive Games</button>
+                            <button class="tab-btn" onclick="switchAssessmentTab('history')">Assessment History</button>
+                        </div>
+
+                        <div class="assessment-content">
+                            <!-- Quiz Tab -->
+                            <div id="quizTab" class="tab-content active">
+                                <div class="quiz-container">
+                                    <div class="quiz-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="quizProgressBar"></div>
+                                        </div>
+                                        <span class="progress-text">Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">20</span></span>
+                                    </div>
+
+                                    <div class="question-container">
+                                        <h3 id="questionText">Loading question...</h3>
+                                        <div class="options-container" id="optionsContainer">
+                                            <!-- Options will be loaded dynamically -->
+                                        </div>
+                                    </div>
+
+                                    <div class="quiz-navigation">
+                                        <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>
+                                            <i class="fas fa-arrow-left"></i>
+                                            Previous
+                                        </button>
+                                        <button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()" disabled>
+                                            Next
+                                            <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Games Tab -->
+                            <div id="gamesTab" class="tab-content">
+                                <div class="games-grid">
+                                    <div class="game-card" onclick="openGameModal('breathing')">
+                                        <div class="game-icon">
+                                            <i class="fas fa-lungs"></i>
+                                        </div>
+                                        <h3>Breathing Exercise</h3>
+                                        <p>Practice controlled breathing to reduce stress</p>
+                                        <div class="game-stats">
+                                            <span><i class="fas fa-clock"></i> 5 min</span>
+                                            <span><i class="fas fa-star"></i> Easy</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="game-card" onclick="openGameModal('color')">
+                                        <div class="game-icon">
+                                            <i class="fas fa-palette"></i>
+                                        </div>
+                                        <h3>Color Matching</h3>
+                                        <p>Test your focus and concentration</p>
+                                        <div class="game-stats">
+                                            <span><i class="fas fa-clock"></i> 2 min</span>
+                                            <span><i class="fas fa-star"></i> Medium</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="game-card" onclick="openGameModal('memory')">
+                                        <div class="game-icon">
+                                            <i class="fas fa-brain"></i>
+                                        </div>
+                                        <h3>Memory Challenge</h3>
+                                        <p>Improve your memory and cognitive function</p>
+                                        <div class="game-stats">
+                                            <span><i class="fas fa-clock"></i> 3 min</span>
+                                            <span><i class="fas fa-star"></i> Hard</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="game-card" onclick="openGameModal('reaction')">
+                                        <div class="game-icon">
+                                            <i class="fas fa-bolt"></i>
+                                        </div>
+                                        <h3>Reaction Test</h3>
+                                        <p>Measure your reaction time and stress response</p>
+                                        <div class="game-stats">
+                                            <span><i class="fas fa-clock"></i> 1 min</span>
+                                            <span><i class="fas fa-star"></i> Medium</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- History Tab -->
+                            <div id="historyTab" class="tab-content">
+                                <div class="history-container">
+                                    <div class="history-filters">
+                                        <select id="historyFilter">
+                                            <option value="all">All Assessments</option>
+                                            <option value="quiz">Quiz Only</option>
+                                            <option value="games">Games Only</option>
+                                            <option value="last7days">Last 7 Days</option>
+                                            <option value="last30days">Last 30 Days</option>
+                                        </select>
+                                    </div>
+                                    <div class="history-list" id="assessmentHistory">
+                                        <!-- History items will be loaded dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Games Section -->
+                <section id="games" class="app-section">
+                    <div class="games-container">
+                        <div class="games-header">
+                            <h2>Stress Relief Games</h2>
+                            <p>Engage in interactive games designed to reduce stress and improve mental well-being</p>
+                        </div>
+
+                        <div class="games-categories">
+                            <div class="category-tabs">
+                                <button class="category-tab active" onclick="switchGameCategory('relaxation')">Relaxation</button>
+                                <button class="category-tab" onclick="switchGameCategory('focus')">Focus</button>
+                                <button class="category-tab" onclick="switchGameCategory('memory')">Memory</button>
+                                <button class="category-tab" onclick="switchGameCategory('reaction')">Reaction</button>
+                            </div>
+
+                            <div class="games-content">
+                                <div id="relaxationGames" class="category-content active">
+                                    <div class="games-grid">
+                                        <div class="game-card featured" onclick="openGameModal('breathing')">
+                                            <div class="game-badge">Featured</div>
+                                            <div class="game-icon">
+                                                <i class="fas fa-lungs"></i>
+                                            </div>
+                                            <h3>Guided Breathing</h3>
+                                            <p>Follow the breathing pattern to calm your mind and reduce stress</p>
+                                            <div class="game-metrics">
+                                                <div class="metric">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>5-10 min</span>
+                                                </div>
+                                                <div class="metric">
+                                                    <i class="fas fa-heart"></i>
+                                                    <span>Heart Rate</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="game-card" onclick="openGameModal('meditation')">
+                                            <div class="game-icon">
+                                                <i class="fas fa-om"></i>
+                                            </div>
+                                            <h3>Meditation Timer</h3>
+                                            <p>Practice mindfulness with customizable meditation sessions</p>
+                                            <div class="game-metrics">
+                                                <div class="metric">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>5-30 min</span>
+                                                </div>
+                                                <div class="metric">
+                                                    <i class="fas fa-leaf"></i>
+                                                    <span>Mindfulness</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="game-card" onclick="openGameModal('nature')">
+                                            <div class="game-icon">
+                                                <i class="fas fa-tree"></i>
+                                            </div>
+                                            <h3>Nature Sounds</h3>
+                                            <p>Listen to calming nature sounds and ambient music</p>
+                                            <div class="game-metrics">
+                                                <div class="metric">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>Unlimited</span>
+                                                </div>
+                                                <div class="metric">
+                                                    <i class="fas fa-volume-up"></i>
+                                                    <span>Audio</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="focusGames" class="category-content">
+                                    <div class="games-grid">
+                                        <div class="game-card" onclick="openGameModal('color')">
+                                            <div class="game-icon">
+                                                <i class="fas fa-palette"></i>
+                                            </div>
+                                            <h3>Color Matching</h3>
+                                            <p>Match colors quickly to test your concentration under pressure</p>
+                                        </div>
+
+                                        <div class="game-card" onclick="openGameModal('focus')">
+                                            <div class="game-icon">
+                                                <i class="fas fa-bullseye"></i>
+                                            </div>
+                                            <h3>Focus Training</h3>
+                                            <p>Improve your ability to concentrate and maintain attention</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="memoryGames" class="category-content">
+                                    <div class="games-grid">
+                                        <div class="game-card" onclick="openGameModal('memory')">
+                                            <div class="game-icon">
+                                                <i class="fas fa-brain"></i>
+                                            </div>
+                                            <h3>Memory Challenge</h3>
+                                            <p>Test your memory and focus with this engaging card game</p>
+                                        </div>
+
+                                        <div class="game-card" onclick="openGameModal('sequence')">
+                                            <div class="game-icon">
+                                                <i class="fas fa-list-ol"></i>
+                                            </div>
+                                            <h3>Sequence Memory</h3>
+                                            <p>Remember and repeat increasingly complex sequences</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="reactionGames" class="category-content">
+                                    <div class="games-grid">
+                                        <div class="game-card" onclick="openGameModal('reaction')">
+                                            <div class="game-icon">
+                                                <i class="fas fa-bolt"></i>
+                                            </div>
+                                            <h3>Reaction Time</h3>
+                                            <p>Measure your reaction time and stress response</p>
+                                        </div>
+
+                                        <div class="game-card" onclick="openGameModal('reflex')">
+                                            <div class="game-icon">
+                                                <i class="fas fa-hand-paper"></i>
+                                            </div>
+                                            <h3>Reflex Training</h3>
+                                            <p>Improve your reflexes and response time</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tracking Section -->
+                <section id="tracking" class="app-section">
+                    <div class="tracking-container">
+                        <div class="tracking-header">
+                            <h2>Stress Tracking</h2>
+                            <p>Monitor your stress levels and track your progress over time</p>
+                        </div>
+
+                        <div class="tracking-tabs">
+                            <button class="tab-btn active" onclick="switchTrackingTab('overview')">Overview</button>
+                            <button class="tab-btn" onclick="switchTrackingTab('daily')">Daily Log</button>
+                            <button class="tab-btn" onclick="switchTrackingTab('analytics')">Analytics</button>
+                            <button class="tab-btn" onclick="switchTrackingTab('goals')">Goals</button>
+                        </div>
+
+                        <div class="tracking-content">
+                            <!-- Overview Tab -->
+                            <div id="overviewTab" class="tab-content active">
+                                <div class="overview-grid">
+                                    <div class="overview-card">
+                                        <h3>Current Stress Level</h3>
+                                        <div class="stress-indicator">
+                                            <div class="stress-circle">
+                                                <span id="currentStressLevel">Moderate</span>
+                                            </div>
+                                            <div class="stress-details">
+                                                <div class="stress-factor">
+                                                    <span>Work</span>
+                                                    <div class="factor-bar">
+                                                        <div class="factor-fill" style="width: 70%"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="stress-factor">
+                                                    <span>Personal</span>
+                                                    <div class="factor-bar">
+                                                        <div class="factor-fill" style="width: 40%"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="stress-factor">
+                                                    <span>Health</span>
+                                                    <div class="factor-bar">
+                                                        <div class="factor-fill" style="width: 20%"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="overview-card">
+                                        <h3>Weekly Trend</h3>
+                                        <div class="trend-chart">
+                                            <canvas id="weeklyTrendChart"></canvas>
+                                        </div>
+                                    </div>
+
+                                    <div class="overview-card">
+                                        <h3>Stress Triggers</h3>
+                                        <div class="triggers-list">
+                                            <div class="trigger-item">
+                                                <span class="trigger-name">Work Deadlines</span>
+                                                <span class="trigger-frequency">5 times this week</span>
+                                            </div>
+                                            <div class="trigger-item">
+                                                <span class="trigger-name">Traffic</span>
+                                                <span class="trigger-frequency">3 times this week</span>
+                                            </div>
+                                            <div class="trigger-item">
+                                                <span class="trigger-name">Social Events</span>
+                                                <span class="trigger-frequency">2 times this week</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="overview-card">
+                                        <h3>Relief Activities</h3>
+                                        <div class="activities-list">
+                                            <div class="activity-item">
+                                                <i class="fas fa-lungs"></i>
+                                                <span>Breathing Exercises</span>
+                                                <span class="activity-count">12 times</span>
+                                            </div>
+                                            <div class="activity-item">
+                                                <i class="fas fa-om"></i>
+                                                <span>Meditation</span>
+                                                <span class="activity-count">8 times</span>
+                                            </div>
+                                            <div class="activity-item">
+                                                <i class="fas fa-running"></i>
+                                                <span>Exercise</span>
+                                                <span class="activity-count">5 times</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Daily Log Tab -->
+                            <div id="dailyTab" class="tab-content">
+                                <div class="daily-log-container">
+                                    <div class="log-header">
+                                        <h3>Daily Stress Log</h3>
+                                        <button class="btn-primary" onclick="openMoodLogModal()">
+                                            <i class="fas fa-plus"></i>
+                                            Log Today's Mood
+                                        </button>
+                                    </div>
+
+                                    <div class="log-calendar">
+                                        <div class="calendar-header">
+                                            <button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                                            <h4 id="currentMonth">December 2024</h4>
+                                            <button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+                                        </div>
+                                        <div class="calendar-grid" id="calendarGrid">
+                                            <!-- Calendar will be generated dynamically -->
+                                        </div>
+                                    </div>
+
+                                    <div class="log-entries" id="dailyLogEntries">
+                                        <!-- Log entries will be loaded dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Analytics Tab -->
+                            <div id="analyticsTab" class="tab-content">
+                                <div class="analytics-container">
+                                    <div class="analytics-filters">
+                                        <select id="analyticsTimeframe">
+                                            <option value="7days">Last 7 Days</option>
+                                            <option value="30days">Last 30 Days</option>
+                                            <option value="90days">Last 90 Days</option>
+                                            <option value="1year">Last Year</option>
+                                        </select>
+                                        <select id="analyticsMetric">
+                                            <option value="stress">Stress Level</option>
+                                            <option value="mood">Mood</option>
+                                            <option value="activities">Activities</option>
+                                            <option value="sleep">Sleep Quality</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="analytics-charts">
+                                        <div class="chart-card">
+                                            <h4>Stress Level Over Time</h4>
+                                            <canvas id="stressChart"></canvas>
+                                        </div>
+                                        <div class="chart-card">
+                                            <h4>Activity Effectiveness</h4>
+                                            <canvas id="activityChart"></canvas>
+                                        </div>
+                                        <div class="chart-card">
+                                            <h4>Stress vs. Mood Correlation</h4>
+                                            <canvas id="correlationChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Goals Tab -->
+                            <div id="goalsTab" class="tab-content">
+                                <div class="goals-container">
+                                    <div class="goals-header">
+                                        <h3>Stress Management Goals</h3>
+                                        <button class="btn-primary" onclick="openGoalModal()">
+                                            <i class="fas fa-plus"></i>
+                                            Set New Goal
+                                        </button>
+                                    </div>
+
+                                    <div class="goals-list" id="goalsList">
+                                        <!-- Goals will be loaded dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Section -->
+                <section id="reports" class="app-section">
+                    <div class="reports-container">
+                        <div class="reports-header">
+                            <h2>Reports & Insights</h2>
+                            <p>Detailed analysis of your stress patterns and progress</p>
+                        </div>
+
+                        <div class="reports-grid">
+                            <div class="report-card">
+                                <div class="report-header">
+                                    <h3>Weekly Stress Report</h3>
+                                    <span class="report-date">Dec 15-21, 2024</span>
+                                </div>
+                                <div class="report-content">
+                                    <div class="report-summary">
+                                        <div class="summary-item">
+                                            <span class="summary-label">Average Stress Level</span>
+                                            <span class="summary-value moderate">6.2/10</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">Peak Stress Day</span>
+                                            <span class="summary-value">Tuesday</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">Most Effective Activity</span>
+                                            <span class="summary-value">Breathing Exercise</span>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart">
+                                        <canvas id="weeklyReportChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-card">
+                                <div class="report-header">
+                                    <h3>Monthly Progress</h3>
+                                    <span class="report-date">November 2024</span>
+                                </div>
+                                <div class="report-content">
+                                    <div class="progress-metrics">
+                                        <div class="metric-item">
+                                            <div class="metric-icon">
+                                                <i class="fas fa-arrow-down"></i>
+                                            </div>
+                                            <div class="metric-details">
+                                                <span class="metric-label">Stress Reduction</span>
+                                                <span class="metric-value">-15%</span>
+                                            </div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-icon">
+                                                <i class="fas fa-arrow-up"></i>
+                                            </div>
+                                            <div class="metric-details">
+                                                <span class="metric-label">Activity Frequency</span>
+                                                <span class="metric-value">+23%</span>
+                                            </div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-icon">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div class="metric-details">
+                                                <span class="metric-label">Goals Achieved</span>
+                                                <span class="metric-value">3/4</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-card">
+                                <div class="report-header">
+                                    <h3>Personalized Insights</h3>
+                                    <span class="report-date">Based on your data</span>
+                                </div>
+                                <div class="report-content">
+                                    <div class="insights-list">
+                                        <div class="insight-item">
+                                            <i class="fas fa-lightbulb"></i>
+                                            <div class="insight-content">
+                                                <h4>Peak Stress Times</h4>
+                                                <p>You tend to experience higher stress levels between 2-4 PM. Consider scheduling relaxation activities during this time.</p>
+                                            </div>
+                                        </div>
+                                        <div class="insight-item">
+                                            <i class="fas fa-chart-line"></i>
+                                            <div class="insight-content">
+                                                <h4>Activity Effectiveness</h4>
+                                                <p>Breathing exercises reduce your stress by an average of 2.3 points. Try to practice them more frequently.</p>
+                                            </div>
+                                        </div>
+                                        <div class="insight-item">
+                                            <i class="fas fa-trophy"></i>
+                                            <div class="insight-content">
+                                                <h4>Progress Milestone</h4>
+                                                <p>Congratulations! You've maintained a stress level below 7 for 5 consecutive days - a new record!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reports-actions">
+                            <button class="btn-secondary" onclick="generateReport()">
+                                <i class="fas fa-download"></i>
+                                Download Report
+                            </button>
+                            <button class="btn-primary" onclick="shareReport()">
+                                <i class="fas fa-share"></i>
+                                Share with Doctor
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chatbot Section -->
+                <section id="chatbot" class="app-section">
+                    <div class="chatbot-container">
+                        <div class="chatbot-header">
+                            <h2>AI Stress Predictor Chatbot</h2>
+                            <p>Chat with our AI to get instant stress level predictions and personalized recommendations</p>
+                        </div>
+                        
+                        <div class="chatbot-iframe-container">
+                            <iframe 
+                                src="chatbot.html" 
+                                width="100%" 
+                                height="600px" 
+                                frameborder="0"
+                                title="AI Stress Predictor Chatbot"
+                            ></iframe>
+                        </div>
+                        
+                        <div class="chatbot-info">
+                            <div class="info-card">
+                                <i class="fas fa-brain"></i>
+                                <h3>AI-Powered Analysis</h3>
+                                <p>Our chatbot uses advanced natural language processing to analyze your messages and predict stress levels with high accuracy.</p>
+                            </div>
+                            <div class="info-card">
+                                <i class="fas fa-comments"></i>
+                                <h3>Natural Conversation</h3>
+                                <p>Chat naturally about your feelings, concerns, or daily experiences. The AI understands context and emotions.</p>
+                            </div>
+                            <div class="info-card">
+                                <i class="fas fa-lightbulb"></i>
+                                <h3>Personalized Recommendations</h3>
+                                <p>Get tailored stress management techniques and activities based on your specific situation and stress level.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Game Modals -->
+        <div id="gameModals">
+            <!-- Breathing Exercise Modal -->
+            <div id="breathingModal" class="game-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Guided Breathing Exercise</h3>
+                        <button class="close-btn" onclick="closeGameModal('breathingModal')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="breathing-container">
+                            <div class="breathing-circle" id="breathingCircle">
+                                <div class="breathing-text">
+                                    <span id="breathingInstruction">Get Ready</span>
+                                    <div class="breathing-timer" id="breathingTimer">0</div>
+                                </div>
+                            </div>
+                            <div class="breathing-controls">
+                                <button class="game-btn" id="breathingStartBtn" onclick="startBreathing()">Start</button>
+                                <button class="game-btn secondary" onclick="resetBreathing()">Reset</button>
+                            </div>
+                            <div class="breathing-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Cycles:</span>
+                                    <span class="stat-value" id="breathingCycles">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Duration:</span>
+                                    <span class="stat-value" id="breathingDuration">0s</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Heart Rate:</span>
+                                    <span class="stat-value" id="breathingHeartRate">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other game modals will be added here -->
+        </div>
+
+        <!-- Mood Log Modal -->
+        <div id="moodLogModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Log Your Mood</h3>
+                    <button class="close-btn" onclick="closeModal('moodLogModal')">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="moodLogForm" onsubmit="submitMoodLog(event)">
+                        <div class="form-group">
+                            <label>How are you feeling right now?</label>
+                            <div class="mood-selector">
+                                <input type="radio" name="mood" value="1" id="mood1">
+                                <label for="mood1" class="mood-option">
+                                    <i class="fas fa-frown"></i>
+                                    <span>Very Bad</span>
+                                </label>
+                                <input type="radio" name="mood" value="2" id="mood2">
+                                <label for="mood2" class="mood-option">
+                                    <i class="fas fa-meh"></i>
+                                    <span>Bad</span>
+                                </label>
+                                <input type="radio" name="mood" value="3" id="mood3">
+                                <label for="mood3" class="mood-option">
+                                    <i class="fas fa-smile"></i>
+                                    <span>Okay</span>
+                                </label>
+                                <input type="radio" name="mood" value="4" id="mood4">
+                                <label for="mood4" class="mood-option">
+                                    <i class="fas fa-laugh"></i>
+                                    <span>Good</span>
+                                </label>
+                                <input type="radio" name="mood" value="5" id="mood5">
+                                <label for="mood5" class="mood-option">
+                                    <i class="fas fa-grin-hearts"></i>
+                                    <span>Great</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Stress Level (1-10)</label>
+                            <input type="range" name="stressLevel" min="1" max="10" value="5" class="stress-slider">
+                            <div class="slider-labels">
+                                <span>Low</span>
+                                <span>High</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>What's affecting your mood today?</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="factors" value="work"> Work</label>
+                                <label><input type="checkbox" name="factors" value="family"> Family</label>
+                                <label><input type="checkbox" name="factors" value="health"> Health</label>
+                                <label><input type="checkbox" name="factors" value="relationships"> Relationships</label>
+                                <label><input type="checkbox" name="factors" value="finances"> Finances</label>
+                                <label><input type="checkbox" name="factors" value="other"> Other</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Notes (optional)</label>
+                            <textarea name="notes" placeholder="How are you feeling? What's on your mind?"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Save Mood Log</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app-script.js"></script>
+</body>
+</html>
