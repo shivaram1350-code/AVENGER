@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mobile VR Relaxation Experience</title>
+    
+    <!-- A-Frame CDN -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="breathing-circle"></div>
+            <h2>Loading Relaxation Experience...</h2>
+            <p>Please wait while we prepare your virtual sanctuary</p>
+        </div>
+    </div>
+
+    <!-- Permission Request Screen -->
+    <div id="permission-screen" class="hidden">
+        <div class="permission-content">
+            <div class="icon">📱</div>
+            <h2>Motion Access Required</h2>
+            <p>To experience the full relaxation, we need access to your device's motion sensors.</p>
+            <button id="start-btn" class="start-button">Start Experience</button>
+            <p class="permission-note">This allows you to look around by moving your device</p>
+        </div>
+    </div>
+
+    <!-- Gyroscope Not Supported Screen -->
+    <div id="no-gyro-screen" class="hidden">
+        <div class="no-gyro-content">
+            <div class="icon">⚠️</div>
+            <h2>Motion Control Not Available</h2>
+            <p>Your device doesn't support gyroscope-based motion control.</p>
+            <p>You can still enjoy the relaxing environment by tapping and dragging to look around.</p>
+            <button id="fallback-btn" class="start-button">Enter Relaxation Space</button>
+        </div>
+    </div>
+
+    <!-- A-Frame Scene -->
+    <a-scene id="vr-scene" class="hidden" vr-mode-ui="enabled: false" embedded>
+        <!-- Camera with gyroscope controls -->
+        <a-camera id="main-camera" 
+                  look-controls="enabled: false"
+                  wasd-controls="enabled: false"
+                  position="0 1.6 0">
+        </a-camera>
+
+        <!-- 360° Sky Environment -->
+        <a-sky id="sky" 
+               src="#skyTexture" 
+               rotation="0 -90 0"
+               material="shader: standard; side: double">
+        </a-sky>
+
+        <!-- Ambient Lighting -->
+        <a-light type="ambient" color="#87CEEB" intensity="0.6"></a-light>
+        <a-light type="directional" 
+                 position="0 10 5" 
+                 color="#FFE4B5" 
+                 intensity="0.8"
+                 target="#sky">
+        </a-light>
+
+        <!-- Floating Relaxation Elements -->
+        <a-entity id="floating-elements">
+            <!-- Breathing Circle -->
+            <a-plane id="breathing-circle"
+                     position="0 0 -2"
+                     width="0.5"
+                     height="0.5"
+                     color="#ffffff"
+                     opacity="0.8"
+                     material="shader: flat; transparent: true"
+                     animation="property: scale; to: 1.2 1.2 1; dur: 4000; loop: true; dir: alternate; easing: easeInOutSine">
+            </a-plane>
+
+            <!-- Floating Particles -->
+            <a-entity id="particles">
+                <!-- Particle 1 -->
+                <a-sphere position="-1 2 -3" 
+                         radius="0.05" 
+                         color="#ffffff" 
+                         opacity="0.6"
+                         animation="property: position; to: -1.5 1.5 -2.5; dur: 6000; loop: true; dir: alternate; easing: easeInOutSine">
+                </a-sphere>
+                
+                <!-- Particle 2 -->
+                <a-sphere position="1 1.5 -2.5" 
+                         radius="0.03" 
+                         color="#E6E6FA" 
+                         opacity="0.7"
+                         animation="property: position; to: 1.5 2 -3; dur: 8000; loop: true; dir: alternate; easing: easeInOutSine">
+                </a-sphere>
+                
+                <!-- Particle 3 -->
+                <a-sphere position="0 2.5 -4" 
+                         radius="0.04" 
+                         color="#F0F8FF" 
+                         opacity="0.5"
+                         animation="property: position; to: 0.5 1.8 -3.5; dur: 7000; loop: true; dir: alternate; easing: easeInOutSine">
+                </a-sphere>
+            </a-entity>
+
+            <!-- Relaxation Text -->
+            <a-text id="relax-text"
+                    value="Tap to Relax"
+                    position="0 -0.5 -2"
+                    align="center"
+                    color="#ffffff"
+                    opacity="0.9"
+                    scale="0.8 0.8 0.8"
+                    animation="property: opacity; to: 0.5; dur: 3000; loop: true; dir: alternate; easing: easeInOutSine">
+            </a-text>
+        </a-entity>
+
+        <!-- Ground Plane -->
+        <a-plane position="0 0 0" 
+                 rotation="-90 0 0" 
+                 width="100" 
+                 height="100" 
+                 color="#90EE90" 
+                 opacity="0.3"
+                 material="shader: flat; transparent: true">
+        </a-plane>
+    </a-scene>
+
+    <!-- UI Overlay -->
+    <div id="ui-overlay" class="hidden">
+        <div class="ui-content">
+            <div class="breathing-guide">
+                <div class="breath-circle" id="breath-circle"></div>
+                <p id="breath-text">Breathe In</p>
+            </div>
+            <div class="controls">
+                <button id="reset-view" class="control-btn">Reset View</button>
+                <button id="toggle-sound" class="control-btn">🔊 Sound</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

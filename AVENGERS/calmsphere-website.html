@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalmSphere VR – Virtual Reality Therapy for Anxiety and Stress</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="calmsphere-styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-brain"></i>
+                <span>CalmSphere VR</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#features" class="nav-link">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#technology" class="nav-link">Technology</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#team" class="nav-link">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-main">CalmSphere VR</span>
+                    <span class="title-sub">Heal Your Mind in Virtual Reality</span>
+                </h1>
+                <p class="hero-tagline">
+                    Experience calmness and peace through immersive VR therapy. 
+                    Accessible, affordable, and effective mental health support for everyone.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('features')">
+                        <i class="fas fa-play"></i>
+                        Try Demo
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToSection('about')">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="vr-headset">
+                    <i class="fas fa-vr-cardboard"></i>
+                </div>
+                <div class="floating-elements">
+                    <div class="element element-1">🧘</div>
+                    <div class="element element-2">🌲</div>
+                    <div class="element element-3">🌊</div>
+                    <div class="element element-4">✨</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About CalmSphere VR</h2>
+                <p class="section-subtitle">Revolutionizing mental health therapy through immersive technology</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="problem-solution">
+                        <div class="problem">
+                            <h3><i class="fas fa-exclamation-triangle"></i> The Problem</h3>
+                            <p>
+                                Mental health issues like anxiety and stress affect millions worldwide, yet traditional therapy 
+                                remains inaccessible due to cost, location, and stigma. Many people struggle alone without 
+                                the support they need.
+                            </p>
+                        </div>
+                        <div class="solution">
+                            <h3><i class="fas fa-lightbulb"></i> Our Solution</h3>
+                            <p>
+                                CalmSphere VR brings therapy to your home through immersive virtual reality experiences. 
+                                Our affordable platform combines guided meditation, breathing exercises, and calming 
+                                environments to provide effective mental health support.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-features">
+                    <div class="feature-icon">
+                        <i class="fas fa-universal-access"></i>
+                        <h4>Accessibility</h4>
+                        <p>Works with affordable VR headsets and smartphones</p>
+                    </div>
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                        <h4>Mental Health</h4>
+                        <p>Evidence-based therapy techniques in immersive environments</p>
+                    </div>
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                        <h4>Innovation</h4>
+                        <p>Cutting-edge VR technology for mental wellness</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Key Features</h2>
+                <p class="section-subtitle">Comprehensive VR therapy tools for mental wellness</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Immersive Environments</h3>
+                    <p>Relax in beautiful virtual spaces including serene forests, peaceful beaches, and starlit night skies designed to reduce stress and anxiety.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-lungs"></i>
+                    </div>
+                    <h3>Guided Breathing & Meditation</h3>
+                    <p>Interactive breathing exercises and meditation sessions led by certified therapists to help you find inner peace and calm.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Mood Tracking & Journaling</h3>
+                    <p>Track your emotional journey with built-in mood tracking and journaling features to monitor your progress over time.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Therapist Dashboard</h3>
+                    <p>Optional professional monitoring tools for therapists to track patient progress and provide personalized guidance.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Privacy & Data Security</h3>
+                    <p>Your mental health data is protected with end-to-end encryption and HIPAA-compliant security measures.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Cross-Platform Access</h3>
+                    <p>Available on VR headsets, smartphones, and web browsers for maximum accessibility and convenience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack Section -->
+    <section id="technology" class="technology">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Technology Stack</h2>
+                <p class="section-subtitle">Built with cutting-edge technologies for optimal performance</p>
+            </div>
+            
+            <div class="tech-grid">
+                <div class="tech-category">
+                    <h3>Frontend & VR</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <i class="fab fa-unity"></i>
+                            <span>Unity 3D</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-cube"></i>
+                            <span>A-Frame</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-vr-cardboard"></i>
+                            <span>WebXR</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-category">
+                    <h3>Backend & Database</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <i class="fab fa-node-js"></i>
+                            <span>Node.js</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-database"></i>
+                            <span>Firebase</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-cloud"></i>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-category">
+                    <h3>Mobile & Platforms</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <i class="fab fa-android"></i>
+                            <span>Android</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-apple"></i>
+                            <span>iOS</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-html5"></i>
+                            <span>Web</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Team</h2>
+                <p class="section-subtitle">Passionate developers and mental health advocates</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Sarah Chen</h3>
+                    <p class="member-role">Project Manager & UX Designer</p>
+                    <p class="member-bio">Mental health advocate with 5+ years in healthcare technology and user experience design.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Alex Rodriguez</h3>
+                    <p class="member-role">VR Developer</p>
+                    <p class="member-bio">Unity 3D expert specializing in immersive experiences and 3D environment design.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Dr. Emily Watson</h3>
+                    <p class="member-role">Mental Health Consultant</p>
+                    <p class="member-bio">Licensed therapist with expertise in anxiety disorders and digital mental health interventions.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Marcus Johnson</h3>
+                    <p class="member-role">Backend Developer</p>
+                    <p class="member-bio">Full-stack developer focused on scalable backend systems and data security.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What People Say</h2>
+                <p class="section-subtitle">Real stories from our community</p>
+            </div>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial active">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"CalmSphere VR has been a game-changer for my anxiety. The immersive forest environment helps me relax in ways traditional meditation never could."</p>
+                        <div class="testimonial-author">
+                            <strong>Jessica M.</strong>
+                            <span>Beta Tester</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Join us in revolutionizing mental health care</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <p>Have questions about CalmSphere VR? Want to collaborate or join our team? We'd love to hear from you!</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>hello@calmspherevr.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>San Francisco, CA</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-brain"></i>
+                    <span>CalmSphere VR</span>
+                </div>
+                <div class="footer-text">
+                    <p>&copy; 2025 CalmSphere VR. All rights reserved.</p>
+                    <p>Developed for Hackathon 2025</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#support">Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Download App Modal -->
+    <div id="download-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Download CalmSphere VR</h3>
+            <p>Get the app on your preferred platform:</p>
+            <div class="download-buttons">
+                <a href="#" class="download-btn">
+                    <i class="fab fa-google-play"></i>
+                    <span>Google Play</span>
+                </a>
+                <a href="#" class="download-btn">
+                    <i class="fab fa-app-store"></i>
+                    <span>App Store</span>
+                </a>
+                <a href="#" class="download-btn">
+                    <i class="fas fa-download"></i>
+                    <span>APK Download</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="calmsphere-script.js"></script>
+</body>
+</html>

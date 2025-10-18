@@ -1,0 +1,400 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+/* Hidden class for toggling visibility */
+.hidden {
+    display: none !important;
+}
+
+/* Loading Screen */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease-out;
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+    max-width: 300px;
+    padding: 20px;
+}
+
+.breathing-circle {
+    width: 80px;
+    height: 80px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+}
+
+.loading-content h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 300;
+}
+
+.loading-content p {
+    font-size: 16px;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+/* Permission Screen */
+#permission-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.permission-content {
+    text-align: center;
+    color: white;
+    max-width: 350px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.permission-content .icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.permission-content h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.permission-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.permission-note {
+    font-size: 14px !important;
+    opacity: 0.7 !important;
+    margin-top: 15px !important;
+}
+
+/* No Gyroscope Screen */
+#no-gyro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.no-gyro-content {
+    text-align: center;
+    color: white;
+    max-width: 350px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.no-gyro-content .icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.no-gyro-content h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.no-gyro-content p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Start Button */
+.start-button {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    min-width: 200px;
+}
+
+.start-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.start-button:active {
+    transform: translateY(0);
+}
+
+/* A-Frame Scene Styling */
+#vr-scene {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* UI Overlay */
+#ui-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.ui-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: auto;
+}
+
+/* Breathing Guide */
+.breathing-guide {
+    margin-bottom: 40px;
+}
+
+.breath-circle {
+    width: 120px;
+    height: 120px;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: breathe 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+#breath-text {
+    color: white;
+    font-size: 18px;
+    font-weight: 300;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    pointer-events: auto;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .permission-content,
+    .no-gyro-content {
+        max-width: 90%;
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    .permission-content h2,
+    .no-gyro-content h2 {
+        font-size: 24px;
+    }
+    
+    .permission-content p,
+    .no-gyro-content p {
+        font-size: 14px;
+    }
+    
+    .start-button {
+        font-size: 16px;
+        padding: 12px 25px;
+        min-width: 180px;
+    }
+    
+    .breath-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    #breath-text {
+        font-size: 16px;
+    }
+    
+    .control-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .permission-content,
+    .no-gyro-content {
+        padding: 15px;
+    }
+    
+    .permission-content h2,
+    .no-gyro-content h2 {
+        font-size: 20px;
+    }
+    
+    .start-button {
+        font-size: 14px;
+        padding: 10px 20px;
+        min-width: 160px;
+    }
+    
+    .breath-circle {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .controls {
+        gap: 10px;
+    }
+}
+
+/* Landscape Orientation */
+@media (orientation: landscape) and (max-height: 500px) {
+    .permission-content,
+    .no-gyro-content {
+        max-width: 80%;
+        padding: 15px;
+    }
+    
+    .permission-content h2,
+    .no-gyro-content h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .permission-content p,
+    .no-gyro-content p {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .start-button {
+        font-size: 14px;
+        padding: 10px 20px;
+        margin-top: 15px;
+    }
+}
+
+/* Smooth Transitions */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Prevent text selection and context menu on mobile */
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure full viewport coverage */
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}

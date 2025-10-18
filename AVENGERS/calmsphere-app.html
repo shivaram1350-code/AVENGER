@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>CalmSphere VR - Mobile Therapy App</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#6B73FF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="CalmSphere VR">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- A-Frame for VR -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="calmsphere-app-styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="screen">
+        <div class="loading-content">
+            <div class="app-logo">
+                <i class="fas fa-brain"></i>
+                <h1>CalmSphere VR</h1>
+            </div>
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+            <p>Preparing your therapy session...</p>
+        </div>
+    </div>
+
+    <!-- Onboarding Screen -->
+    <div id="onboarding-screen" class="screen hidden">
+        <div class="onboarding-content">
+            <div class="onboarding-slide active" data-slide="0">
+                <div class="slide-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2>Welcome to CalmSphere VR</h2>
+                <p>Your personal mental wellness companion. Take control of your anxiety and stress with immersive VR therapy.</p>
+            </div>
+            
+            <div class="onboarding-slide" data-slide="1">
+                <div class="slide-icon">
+                    <i class="fas fa-vr-cardboard"></i>
+                </div>
+                <h2>Immersive Therapy</h2>
+                <p>Experience calming environments and guided exercises designed to reduce stress and promote mental wellness.</p>
+            </div>
+            
+            <div class="onboarding-slide" data-slide="2">
+                <div class="slide-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h2>Track Your Progress</h2>
+                <p>Monitor your mood, track your progress, and see how VR therapy is helping you feel better over time.</p>
+            </div>
+            
+            <div class="onboarding-controls">
+                <button id="prev-slide" class="btn btn-secondary" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slide-indicators">
+                    <span class="indicator active"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                </div>
+                <button id="next-slide" class="btn btn-primary">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Screen -->
+    <div id="main-app" class="screen hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="app-logo">
+                    <i class="fas fa-brain"></i>
+                    <span>CalmSphere</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="profile-btn" class="header-btn">
+                    <i class="fas fa-user"></i>
+                </button>
+                <button id="settings-btn" class="header-btn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <div class="welcome-section">
+                    <h2>Welcome back!</h2>
+                    <p>How are you feeling today?</p>
+                </div>
+                
+                <!-- Mood Check-in -->
+                <div class="mood-checkin">
+                    <h3>Quick Mood Check</h3>
+                    <div class="mood-options">
+                        <button class="mood-btn" data-mood="1">
+                            <i class="fas fa-frown"></i>
+                            <span>Stressed</span>
+                        </button>
+                        <button class="mood-btn" data-mood="2">
+                            <i class="fas fa-meh"></i>
+                            <span>Okay</span>
+                        </button>
+                        <button class="mood-btn" data-mood="3">
+                            <i class="fas fa-smile"></i>
+                            <span>Good</span>
+                        </button>
+                        <button class="mood-btn" data-mood="4">
+                            <i class="fas fa-laugh"></i>
+                            <span>Great</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-grid">
+                        <button class="action-card" data-action="breathing">
+                            <i class="fas fa-lungs"></i>
+                            <span>Breathing Exercise</span>
+                        </button>
+                        <button class="action-card" data-action="meditation">
+                            <i class="fas fa-om"></i>
+                            <span>Meditation</span>
+                        </button>
+                        <button class="action-card" data-action="vr-environment">
+                            <i class="fas fa-vr-cardboard"></i>
+                            <span>VR Environment</span>
+                        </button>
+                        <button class="action-card" data-action="journal">
+                            <i class="fas fa-book"></i>
+                            <span>Journal</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Summary -->
+                <div class="progress-summary">
+                    <h3>Your Progress</h3>
+                    <div class="progress-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="sessions-completed">0</div>
+                            <div class="stat-label">Sessions Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="streak-days">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="avg-mood">-</div>
+                            <div class="stat-label">Avg Mood</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VR Environment Tab -->
+            <div id="vr-tab" class="tab-content">
+                <div class="vr-controls">
+                    <button id="start-vr" class="btn btn-primary">
+                        <i class="fas fa-play"></i>
+                        Start VR Experience
+                    </button>
+                    <button id="calibrate-gyro" class="btn btn-secondary">
+                        <i class="fas fa-compass"></i>
+                        Calibrate Gyroscope
+                    </button>
+                </div>
+                
+                <div class="environment-selector">
+                    <h3>Choose Your Environment</h3>
+                    <div class="environment-grid">
+                        <button class="environment-card active" data-environment="forest">
+                            <div class="env-preview">
+                                <i class="fas fa-tree"></i>
+                            </div>
+                            <span>Forest</span>
+                        </button>
+                        <button class="environment-card" data-environment="beach">
+                            <div class="env-preview">
+                                <i class="fas fa-water"></i>
+                            </div>
+                            <span>Beach</span>
+                        </button>
+                        <button class="environment-card" data-environment="mountain">
+                            <div class="env-preview">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <span>Mountain</span>
+                        </button>
+                        <button class="environment-card" data-environment="space">
+                            <div class="env-preview">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span>Space</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breathing Exercise Tab -->
+            <div id="breathing-tab" class="tab-content">
+                <div class="breathing-exercise">
+                    <h3>Guided Breathing</h3>
+                    <div class="breathing-circle-container">
+                        <div class="breathing-circle" id="breathing-circle">
+                            <div class="breath-text" id="breath-text">Breathe In</div>
+                        </div>
+                    </div>
+                    
+                    <div class="breathing-controls">
+                        <button id="start-breathing" class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            Start Exercise
+                        </button>
+                        <button id="pause-breathing" class="btn btn-secondary hidden">
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                        <button id="stop-breathing" class="btn btn-danger hidden">
+                            <i class="fas fa-stop"></i>
+                            Stop
+                        </button>
+                    </div>
+                    
+                    <div class="breathing-settings">
+                        <label for="breath-duration">Breath Duration (seconds):</label>
+                        <input type="range" id="breath-duration" min="3" max="8" value="4">
+                        <span id="duration-value">4</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meditation Tab -->
+            <div id="meditation-tab" class="tab-content">
+                <div class="meditation-sessions">
+                    <h3>Meditation Sessions</h3>
+                    <div class="session-list">
+                        <div class="session-card" data-session="anxiety-relief">
+                            <div class="session-info">
+                                <h4>Anxiety Relief</h4>
+                                <p>5 minutes • Beginner</p>
+                            </div>
+                            <button class="btn btn-primary">Start</button>
+                        </div>
+                        <div class="session-card" data-session="stress-management">
+                            <div class="session-info">
+                                <h4>Stress Management</h4>
+                                <p>10 minutes • Intermediate</p>
+                            </div>
+                            <button class="btn btn-primary">Start</button>
+                        </div>
+                        <div class="session-card" data-session="sleep-preparation">
+                            <div class="session-info">
+                                <h4>Sleep Preparation</h4>
+                                <p>15 minutes • Advanced</p>
+                            </div>
+                            <button class="btn btn-primary">Start</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journal Tab -->
+            <div id="journal-tab" class="tab-content">
+                <div class="journal-section">
+                    <h3>Daily Journal</h3>
+                    <div class="journal-entry">
+                        <textarea id="journal-text" placeholder="How are you feeling today? What's on your mind?"></textarea>
+                        <div class="journal-actions">
+                            <button id="save-journal" class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                Save Entry
+                            </button>
+                            <button id="view-history" class="btn btn-secondary">
+                                <i class="fas fa-history"></i>
+                                View History
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-tab="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </button>
+            <button class="nav-item" data-tab="vr">
+                <i class="fas fa-vr-cardboard"></i>
+                <span>VR</span>
+            </button>
+            <button class="nav-item" data-tab="breathing">
+                <i class="fas fa-lungs"></i>
+                <span>Breathe</span>
+            </button>
+            <button class="nav-item" data-tab="meditation">
+                <i class="fas fa-om"></i>
+                <span>Meditate</span>
+            </button>
+            <button class="nav-item" data-tab="journal">
+                <i class="fas fa-book"></i>
+                <span>Journal</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- VR Experience Screen -->
+    <div id="vr-experience" class="screen hidden">
+        <a-scene id="vr-scene" embedded vr-mode-ui="enabled: false">
+            <!-- Camera -->
+            <a-camera id="vr-camera" 
+                      look-controls="enabled: false"
+                      wasd-controls="enabled: false"
+                      position="0 1.6 0">
+            </a-camera>
+
+            <!-- Environment Sky -->
+            <a-sky id="vr-sky" 
+                   src="#skyTexture" 
+                   rotation="0 -90 0">
+            </a-sky>
+
+            <!-- Ambient Lighting -->
+            <a-light type="ambient" color="#87CEEB" intensity="0.6"></a-light>
+            <a-light type="directional" 
+                     position="0 10 5" 
+                     color="#FFE4B5" 
+                     intensity="0.8">
+            </a-light>
+
+            <!-- Floating Elements -->
+            <a-entity id="floating-elements">
+                <!-- Breathing Circle in VR -->
+                <a-plane id="vr-breathing-circle"
+                         position="0 0 -2"
+                         width="0.5"
+                         height="0.5"
+                         color="#ffffff"
+                         opacity="0.8"
+                         material="shader: flat; transparent: true">
+                </a-plane>
+
+                <!-- Floating Particles -->
+                <a-sphere position="-1 2 -3" 
+                         radius="0.05" 
+                         color="#ffffff" 
+                         opacity="0.6"
+                         animation="property: position; to: -1.5 1.5 -2.5; dur: 6000; loop: true; dir: alternate; easing: easeInOutSine">
+                </a-sphere>
+                
+                <a-sphere position="1 1.5 -2.5" 
+                         radius="0.03" 
+                         color="#E6E6FA" 
+                         opacity="0.7"
+                         animation="property: position; to: 1.5 2 -3; dur: 8000; loop: true; dir: alternate; easing: easeInOutSine">
+                </a-sphere>
+            </a-entity>
+
+            <!-- Ground -->
+            <a-plane position="0 0 0" 
+                     rotation="-90 0 0" 
+                     width="100" 
+                     height="100" 
+                     color="#90EE90" 
+                     opacity="0.3"
+                     material="shader: flat; transparent: true">
+            </a-plane>
+        </a-scene>
+
+        <!-- VR UI Overlay -->
+        <div class="vr-ui">
+            <button id="exit-vr" class="vr-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            <button id="vr-breathing" class="vr-btn">
+                <i class="fas fa-lungs"></i>
+            </button>
+            <button id="vr-meditation" class="vr-btn">
+                <i class="fas fa-om"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button id="close-settings" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>Notifications</label>
+                    <input type="checkbox" id="notifications" checked>
+                </div>
+                <div class="setting-group">
+                    <label>Daily Reminders</label>
+                    <input type="checkbox" id="daily-reminders" checked>
+                </div>
+                <div class="setting-group">
+                    <label>Gyroscope Sensitivity</label>
+                    <input type="range" id="gyro-sensitivity" min="0.1" max="1" step="0.1" value="0.5">
+                </div>
+                <div class="setting-group">
+                    <label>Theme</label>
+                    <select id="theme-select">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Profile</h3>
+                <button id="close-profile" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-info">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h4>Welcome to CalmSphere VR</h4>
+                    <p>Your mental wellness journey starts here</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Sessions</span>
+                        <span class="stat-value" id="total-sessions">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Current Streak</span>
+                        <span class="stat-value" id="current-streak">0 days</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Favorite Activity</span>
+                        <span class="stat-value" id="favorite-activity">Breathing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Scripts -->
+    <script src="calmsphere-app-script.js"></script>
+</body>
+</html>
