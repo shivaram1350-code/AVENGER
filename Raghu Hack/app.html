@@ -891,7 +891,195 @@
                 </div>
             </div>
 
-            <!-- Other game modals will be added here -->
+            <!-- Color Matching Modal -->
+            <div id="colorModal" class="game-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Color Matching Game</h3>
+                        <button class="close-btn" onclick="closeGameModal('colorModal')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="color-game-area">
+                            <div class="color-instructions">
+                                <h4>Match the color name with the text color!</h4>
+                                <div class="color-score">
+                                    <span>Score: <span id="colorScore">0</span></span>
+                                    <span>Time: <span id="colorTime">30</span>s</span>
+                                </div>
+                            </div>
+                            <div class="color-display" id="colorDisplay">
+                                <div class="color-text" id="colorText">Ready?</div>
+                            </div>
+                            <div class="color-options" id="colorOptions">
+                                <!-- Options will be generated dynamically -->
+                            </div>
+                        </div>
+                        <div class="color-controls">
+                            <button class="game-btn" id="colorStartBtn" onclick="startColorGame()">Start Game</button>
+                            <button class="game-btn secondary" onclick="resetColorGame()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Game Modal -->
+            <div id="memoryModal" class="game-modal">
+                <div class="modal-content large">
+                    <div class="modal-header">
+                        <h3>Memory Challenge</h3>
+                        <button class="close-btn" onclick="closeGameModal('memoryModal')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="memory-game-area">
+                            <div class="memory-info">
+                                <div class="memory-score">
+                                    <span>Moves: <span id="memoryMoves">0</span></span>
+                                    <span>Matches: <span id="memoryMatches">0</span>/8</span>
+                                    <span>Time: <span id="memoryTime">0</span>s</span>
+                                </div>
+                            </div>
+                            <div class="memory-grid" id="memoryGrid">
+                                <!-- Cards will be generated dynamically -->
+                            </div>
+                        </div>
+                        <div class="memory-controls">
+                            <button class="game-btn" id="memoryStartBtn" onclick="startMemoryGame()">Start Game</button>
+                            <button class="game-btn secondary" onclick="resetMemoryGame()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reaction Time Modal -->
+            <div id="reactionModal" class="game-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Reaction Time Test</h3>
+                        <button class="close-btn" onclick="closeGameModal('reactionModal')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="reaction-game-area">
+                            <div class="reaction-instructions">
+                                <h4>Click when the circle turns green!</h4>
+                                <div class="reaction-stats">
+                                    <span>Attempts: <span id="reactionAttempts">0</span></span>
+                                    <span>Average: <span id="reactionAverage">0</span>ms</span>
+                                </div>
+                            </div>
+                            <div class="reaction-circle" id="reactionCircle" onclick="reactToClick()">
+                                <span id="reactionText">Wait...</span>
+                            </div>
+                        </div>
+                        <div class="reaction-controls">
+                            <button class="game-btn" id="reactionStartBtn" onclick="startReactionTest()">Start Test</button>
+                            <button class="game-btn secondary" onclick="resetReactionTest()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meditation Timer Modal -->
+            <div id="meditationModal" class="game-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Meditation Timer</h3>
+                        <button class="close-btn" onclick="closeGameModal('meditationModal')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="meditation-area">
+                            <div class="meditation-timer-display">
+                                <div class="timer-circle" id="meditationTimer">
+                                    <span id="meditationTime">05:00</span>
+                                </div>
+                            </div>
+                            <div class="meditation-controls">
+                                <div class="time-selector">
+                                    <label>Duration:</label>
+                                    <select id="meditationDuration">
+                                        <option value="300">5 minutes</option>
+                                        <option value="600">10 minutes</option>
+                                        <option value="900">15 minutes</option>
+                                        <option value="1800">30 minutes</option>
+                                    </select>
+                                </div>
+                                <div class="meditation-buttons">
+                                    <button class="game-btn" id="meditationStartBtn" onclick="startMeditation()">Start Meditation</button>
+                                    <button class="game-btn secondary" onclick="pauseMeditation()">Pause</button>
+                                    <button class="game-btn secondary" onclick="resetMeditation()">Reset</button>
+                                </div>
+                            </div>
+                            <div class="meditation-guidance">
+                                <p id="meditationGuidance">Find a comfortable position and close your eyes. Focus on your breathing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nature Sounds Modal -->
+            <div id="natureModal" class="game-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Nature Sounds</h3>
+                        <button class="close-btn" onclick="closeGameModal('natureModal')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="nature-sounds-area">
+                            <div class="sound-categories">
+                                <button class="sound-category active" onclick="switchSoundCategory('rain')">Rain</button>
+                                <button class="sound-category" onclick="switchSoundCategory('forest')">Forest</button>
+                                <button class="sound-category" onclick="switchSoundCategory('ocean')">Ocean</button>
+                                <button class="sound-category" onclick="switchSoundCategory('birds')">Birds</button>
+                            </div>
+                            <div class="sound-player">
+                                <div class="sound-visualizer" id="soundVisualizer">
+                                    <div class="sound-wave"></div>
+                                    <div class="sound-wave"></div>
+                                    <div class="sound-wave"></div>
+                                </div>
+                                <div class="sound-controls">
+                                    <button class="sound-btn" id="playBtn" onclick="toggleSound()">
+                                        <i class="fas fa-play"></i>
+                                    </button>
+                                    <div class="volume-control">
+                                        <i class="fas fa-volume-down"></i>
+                                        <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                                        <i class="fas fa-volume-up"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Focus Training Modal -->
+            <div id="focusModal" class="game-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Focus Training</h3>
+                        <button class="close-btn" onclick="closeGameModal('focusModal')">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="focus-game-area">
+                            <div class="focus-instructions">
+                                <h4>Follow the moving dot with your eyes</h4>
+                                <div class="focus-stats">
+                                    <span>Focus Time: <span id="focusTime">0</span>s</span>
+                                    <span>Best: <span id="focusBest">0</span>s</span>
+                                </div>
+                            </div>
+                            <div class="focus-circle" id="focusCircle">
+                                <div class="focus-dot" id="focusDot"></div>
+                            </div>
+                        </div>
+                        <div class="focus-controls">
+                            <button class="game-btn" id="focusStartBtn" onclick="startFocusGame()">Start Training</button>
+                            <button class="game-btn secondary" onclick="resetFocusGame()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Mood Log Modal -->
